@@ -18,7 +18,6 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
     onClose(selectedDates) {    
-      console.log(selectedDates[0]);
       currentDifferenceDate(selectedDates[0]);
       console.log(selectedDates[0]);
   },
@@ -37,19 +36,19 @@ function convertMs(ms) {
   const day = hour * 24;
 
   // Remaining days
-  const days = Math.floor(ms / day);
+  const days = addLeadingZero(Math.floor(ms / day));
   // Remaining hours
-  const hours = Math.floor((ms % day) / hour);
+  const hours = addLeadingZero(Math.floor((ms % day) / hour));
   // Remaining minutes
-  const minutes = Math.floor(((ms % day) % hour) / minute);
+  const minutes = addLeadingZero(Math.floor(((ms % day) % hour) / minute));
   // Remaining seconds
-  const seconds = Math.floor((((ms % day) % hour) % minute) / second);
+  const seconds = addLeadingZero(Math.floor((((ms % day) % hour) % minute) / second));
 
   return { days, hours, minutes, seconds };
 };
 
 function currentDifferenceDate(selectedDates) {
-  if (selectedDates[0]< Date.now()) {
+  if (selectedDates< Date.now()) {
     window.alert("Please choose a date in the future");
     return
         }
@@ -88,5 +87,9 @@ function startTime() {
     renderDate(formatDate);
 
   }
-}
+};
+function addLeadingZero(value) {
+  return String(value).padStart(2, "0");
+
+};
 
